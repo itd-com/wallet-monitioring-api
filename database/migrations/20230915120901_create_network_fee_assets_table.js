@@ -6,7 +6,7 @@ exports.up = (knex) => {
         .createTable('networkFeeAssets', (table) => {
             table.increments('id').primary();
 
-            table.string('baseCurrency').unique().notNullable();
+            table.string('baseCurrency').notNullable();
 
             table.string('unit').notNullable();
             table.string('feeLow');

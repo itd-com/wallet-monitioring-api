@@ -4,6 +4,7 @@ import { FireblocksService } from '@domain/fireblocks/services/fireblocks';
 import { NetworkFeeAsset } from '@domain/networkFee/models/networkFeeAssets';
 import { NetworkFeeAssetService } from '@domain/networkFee/services/networkFeeAssets';
 import { FireblocksHelper } from '@helpers/fireblocks';
+import { Utils } from '@helpers/utils';
 import { format, utcToZonedTime } from 'date-fns-tz';
 
 const CRONJOB_RESET_BANK_ACCOUNT_SCHEDULE = config.CRONJOB_FETCH_NETWORK_FEE_SCHEDULE;
@@ -15,26 +16,33 @@ for (const c of coins) {
         const now = new Date();
         const startAt = format(utcToZonedTime(now, 'Asia/Bangkok'), 'yyyy-MM-dd HH:mm:ss (O)');
         console.log(`RUN:${c}:FetcNetworkFee: ${startAt}`);
+        try {
+            const newSdk = FireblocksService.auth();
+            const currencyFee = await FireblocksService.getFeeForAsset(newSdk, c);
+            console.log({
+                baseCurrency: c,
+                currencyFee,
+            });
 
-        const newSdk = await FireblocksService.auth();
-        const currencyFee = await FireblocksService.getFeeForAsset(newSdk, c);
-        console.log({
-            baseCurrency: c,
-            currencyFee,
-        });
+            await NetworkFeeAssetService.createOne({
+                baseCurrency: c,
+                unit: FireblocksHelper.getFeeUnitByAsset(c).unit,
+                feeLow: FireblocksHelper.getFeeValueByAsset(c, currencyFee.low).value,
+                feeLowResponse: Utils.isValidJSON(currencyFee.low) ? JSON.stringify(currencyFee.low) : null,
+                feeMedium: FireblocksHelper.getFeeValueByAsset(c, currencyFee.medium).value,
+                feeMediumResponse: Utils.isValidJSON(currencyFee.medium) ? JSON.stringify(currencyFee.medium) : null,
+                feeHigh: FireblocksHelper.getFeeValueByAsset(c, currencyFee.high).value,
+                feeHighResponse: Utils.isValidJSON(currencyFee.high) ? JSON.stringify(currencyFee.high) : null,
+            });
 
-        const createdId = await NetworkFeeAssetService.createOne({
-            baseCurrency: c,
-            unit: FireblocksHelper.getFeeUnitByAsset(c).unit,
-            feeLow: FireblocksHelper.getFeeValueByAsset(c, currencyFee.low).value,
-            feeLowResponse: JSON.stringify(currencyFee.low),
-            feeMedium: FireblocksHelper.getFeeValueByAsset(c, currencyFee.medium).value,
-            feeMediumResponse: JSON.stringify(currencyFee.medium),
-            feeHigh: FireblocksHelper.getFeeValueByAsset(c, currencyFee.high).value,
-            feeHighResponse: JSON.stringify(currencyFee.high),
-        });
+        } catch (error) {
+            console.log(error);
+        }
 
-        console.log('insert:', createdId);
+
+
+
+
 
     });
 

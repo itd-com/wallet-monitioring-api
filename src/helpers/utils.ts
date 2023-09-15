@@ -20,6 +20,15 @@ export namespace Utils {
 		}
 	};
 
+	export const isValidJSON = (value?: any): boolean => {
+		try {
+			JSON.stringify(value);
+			return true;
+		} catch (error) {
+			return false;
+		}
+	};
+
 	export const convertJsonString = (jsonString: string): any | undefined => {
 		try {
 			return JSON.parse(jsonString);

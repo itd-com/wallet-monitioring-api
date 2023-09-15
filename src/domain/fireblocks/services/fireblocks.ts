@@ -12,7 +12,7 @@ const apiEndpoint = config.fireblocks.endpoint;
 export namespace FireblocksService {
 	export const auth = () => new FireblocksSDK(apiSecret, apiKey, apiEndpoint);
 
-	export const getFeeForAsset = (sdk: FireblocksSDK, asset: string): Promise<EstimateFeeResponse> => {
+	export const getFeeForAsset = async (sdk: FireblocksSDK, asset: string): Promise<EstimateFeeResponse> => {
 		return sdk.getFeeForAsset(asset);
 	};
 }
