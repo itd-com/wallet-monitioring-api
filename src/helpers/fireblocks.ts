@@ -25,7 +25,7 @@ export namespace FireblocksHelper {
                 value: fee?.networkFee || "undefined",
             };
         }
-        if (baseCurrency === "XLM_TEST") {
+        if (baseCurrency === "XRP_TEST") {
             return {
                 value: fee?.networkFee || "undefined",
             };
