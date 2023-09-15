@@ -14,7 +14,7 @@
             ],
             "runtimeExecutable": "yarn",
             "runtimeArgs": [
-                "dev"
+                "cronJob:dev"
             ]
         },
     ]

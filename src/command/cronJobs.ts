@@ -18,8 +18,12 @@ for (const c of coins) {
 
         const newSdk = await FireblocksService.auth();
         const currencyFee = await FireblocksService.getFeeForAsset(newSdk, c);
+        console.log({
+            baseCurrency: c,
+            currencyFee,
+        });
 
-        const insertData: NetworkFeeAsset.storeT = {
+        const createdId = await NetworkFeeAssetService.createOne({
             baseCurrency: c,
             unit: FireblocksHelper.getFeeUnitByAsset(c).unit,
             feeLow: FireblocksHelper.getFeeValueByAsset(c, currencyFee.low).value,
@@ -28,11 +32,10 @@ for (const c of coins) {
             feeMediumResponse: JSON.stringify(currencyFee.medium),
             feeHigh: FireblocksHelper.getFeeValueByAsset(c, currencyFee.high).value,
             feeHighResponse: JSON.stringify(currencyFee.high),
-        }
+        });
 
-        console.log(insertData);
+        console.log('insert:', createdId);
 
-        await NetworkFeeAssetService.createOne(insertData);
     });
 
     cronFetcNetworkFeeSchedule.start();
