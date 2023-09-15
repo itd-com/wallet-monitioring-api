@@ -22,9 +22,9 @@ export namespace NetworkFeeController {
             // dateTo,
         } = request.query;
 
-        const coins = ['BTC_TEST', 'ETH_TEST3'];
+        let coins = ['BTC_TEST', 'ETH_TEST3'];
         if (currency) {
-            coins.filter((v) => v === currency);
+            coins = coins.filter((v) => v === currency);
         }
         const networkFeeAssets: NetworkFeeAsset.viewT[] = [];
         const newSdk = await FireblocksService.auth();
