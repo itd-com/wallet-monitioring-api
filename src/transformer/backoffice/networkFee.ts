@@ -12,7 +12,7 @@ export namespace BackOfficeNetworkFeeTransformer {
             }
         }>;
 
-        export type ResponseData = NetworkFeeAsset.backofficeViewT[];
+        export type ResponseData = NetworkFeeAsset.viewT[];
     }
 
     export namespace getSchedule {
@@ -25,6 +25,6 @@ export namespace BackOfficeNetworkFeeTransformer {
             }
         }>;
 
-        export type ResponseData = NetworkFeeAsset.backofficeViewT[];
+        export type ResponseData = NetworkFeeAsset.viewT[];
     }
 }

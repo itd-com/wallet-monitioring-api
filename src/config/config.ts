@@ -80,6 +80,17 @@ export const config = {
 	DB_USER: SetEnv.toString(envValidated.DB_USER),
 	DB_PASSWORD: SetEnv.toString(envValidated.DB_PASSWORD),
 
+	fireblocks: {
+		endpoint: process.env.FIREBLOCKS_ENDPOINT || '',
+		apiKey: process.env.FIREBLOCKS_API_KEY || '',
+		secretKeyPath: process.env.FIREBLOCKS_SECRET_KEY_PATH || '',
+		mainVaultId: process.env.FIREBLOCKS_MAIN_VAULT_ID || '',
+		operatingVaultId: process.env.FIREBLOCKS_OPERATING_VAULT_ID || '',
+		coldWalletId: process.env.FIREBLOCKS_COLD_WALLET_ID || '',
+		omnibusCoinbaseExchangeId: process.env.FIREBLOCKS_OMNIBUS_COINBASE_EXCHANGE_ID || '',
+		webhookPublicKey: process.env.FIREBLOCKS_WEBHOOK_PUBLIC_KEY?.replace(/\\n/g, '\n') || '',
+	},
+
 	PRIVATE_KEY_PATH: SetEnv.toString(envValidated.PRIVATE_KEY_PATH),
 	PUBLIC_KEY_PATH: SetEnv.toString(envValidated.PUBLIC_KEY_PATH),
 

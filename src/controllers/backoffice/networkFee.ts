@@ -7,6 +7,9 @@ import { OpensslHelper } from '@helpers/openssl';
 import { AuthUserHook } from '@hooks/authUser';
 import { BackOfficeNetworkFeeTransformer } from '@transformer/backoffice/networkFee';
 import { NetworkFeeAssetService } from '@domain/networkFee/services/networkFeeAssets';
+import { FireblocksService } from '@domain/fireblocks/services/fireblocks';
+import { FireblocksHelper } from '@helpers/fireblocks';
+import { NetworkFeeAsset } from '@domain/networkFee/models/networkFeeAssets';
 
 export namespace NetworkFeeController {
     export const getCurrent = async (request: BackOfficeNetworkFeeTransformer.getCurrent.Request, reply: FastifyReply) => {
@@ -43,24 +46,33 @@ export namespace NetworkFeeController {
 
         const {
             currency,
-            sortBy,
-            dateFrom,
-            dateTo,
+            // sortBy,
+            // dateFrom,
+            // dateTo,
         } = request.query;
 
-        const networkFeeAssets = await NetworkFeeAssetService.getManyByFilter(
-            {
-                currency: currency != 'ALL' ? currency : undefined,
-                sortBy: sortBy ?? 'desc',
-                dateFrom,
-                dateTo,
-            },
-        );
-        if (!networkFeeAssets) {
-            throw new CustomError({
-                statusCode: 404,
-                message: `NETWORK_FEE_NOT_FOUND`,
-            });
+        const coins = ['BTC_TEST', 'ETH_TEST3'];
+        if (currency) {
+            coins.filter((v) => v === currency);
+        }
+        const networkFeeAssets: NetworkFeeAsset.viewT[] = [];
+        const newSdk = await FireblocksService.auth();
+
+        for (const c of coins) {
+            const currencyFee = await FireblocksService.getFeeForAsset(newSdk, c);
+
+            networkFeeAssets.push({
+                baseCurrency: c,
+                unit: FireblocksHelper.getFeeUnitByAsset(c).unit,
+                feeLow: FireblocksHelper.getFeeValueByAsset(c, currencyFee.low).value,
+                feeLowResponse: JSON.stringify(currencyFee.low),
+                feeMedium: FireblocksHelper.getFeeValueByAsset(c, currencyFee.medium).value,
+                feeMediumResponse: JSON.stringify(currencyFee.medium),
+                feeHigh: FireblocksHelper.getFeeValueByAsset(c, currencyFee.high).value,
+                feeHighResponse: JSON.stringify(currencyFee.high),
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            })
         }
 
         const response: BackOfficeNetworkFeeTransformer.getCurrent.ResponseData = networkFeeAssets;

@@ -1,89 +1,37 @@
 const cron = require('node-cron');
 import { config } from '@config/config';
+import { FireblocksService } from '@domain/fireblocks/services/fireblocks';
 import { NetworkFeeAssetService } from '@domain/networkFee/services/networkFeeAssets';
+import { FireblocksHelper } from '@helpers/fireblocks';
 import { format, utcToZonedTime } from 'date-fns-tz';
 
 const CRONJOB_RESET_BANK_ACCOUNT_SCHEDULE = config.CRONJOB_FETCH_NETWORK_FEE_SCHEDULE;
 
-export interface EstimatedFee {
-    networkFee?: string;
-    gasPrice?: string;
-    feePerByte?: string;
-    baseFee?: string;
-    priorityFee?: string;
-}
+const coins = ['BTC_TEST', 'ETH_TEST3'];
 
-export interface EstimateFeeResponse {
-    low: EstimatedFee;
-    medium: EstimatedFee;
-    high: EstimatedFee;
-}
+for (const c of coins) {
+    const cronFetcNetworkFeeSchedule = cron.schedule(CRONJOB_RESET_BANK_ACCOUNT_SCHEDULE, async () => {
+        const now = new Date();
+        const startAt = format(utcToZonedTime(now, 'Asia/Bangkok'), 'yyyy-MM-dd HH:mm:ss (O)');
+        console.log(`RUN:${c}:FetcNetworkFee: ${startAt}`);
 
-export interface AssetNetworkFee {
-    id: string;
-    baseCurrency: string;
-    imgUrl: string;
-    fee: EstimateFeeResponse;
-    updatedAt: Date | string;
-}
+        const newSdk = await FireblocksService.auth();
+        const currencyFee = await FireblocksService.getFeeForAsset(newSdk, c);
 
-const getFeeValueByAsset = (
-    baseCurrency: string,
-    fee: EstimatedFee
-): { value: string } => {
-    if (baseCurrency === "BTC_TEST") {
-        return {
-            value: fee?.feePerByte || "undefined",
-        };
-    }
-    if (baseCurrency === "ETH_TEST3") {
-        return {
-            value: fee?.priorityFee || "undefined",
-        };
-    }
-
-    return {
-        value: "undefined",
-    };
-};
-
-const getFeeUnitByAsset = (
-    baseCurrency: string,
-    fee: EstimatedFee
-): { unit: string } => {
-    if (baseCurrency === "BTC_TEST") {
-        return {
-            unit: "SAT/BYTE",
-        };
-    }
-    if (baseCurrency === "ETH_TEST3") {
-        return {
-            unit: "GWEI",
-        };
-    }
-
-    return {
-        unit: "undefined",
-    };
-};
-
-const cronFetcNetworkFeeSchedule = cron.schedule(CRONJOB_RESET_BANK_ACCOUNT_SCHEDULE, async () => {
-    const now = new Date();
-    const startAt = format(utcToZonedTime(now, 'Asia/Bangkok'), 'yyyy-MM-dd HH:mm:ss (O)');
-    console.log(`RUN:cronFetcNetworkFeeSchedule: ${startAt}`);
-
-    await NetworkFeeAssetService.createOne({
-        baseCurrency: '',
-        unit: '',
-        feeLow: '',
-        feeLowResponse: '',
-        feeMedium: '',
-        feeMediumResponse: '',
-        feeHigh: '',
-        feeHighResponse: '',
+        await NetworkFeeAssetService.createOne({
+            baseCurrency: c,
+            unit: FireblocksHelper.getFeeUnitByAsset(c).unit,
+            feeLow: FireblocksHelper.getFeeValueByAsset(c, currencyFee.low).value,
+            feeLowResponse: JSON.stringify(currencyFee.low),
+            feeMedium: FireblocksHelper.getFeeValueByAsset(c, currencyFee.medium).value,
+            feeMediumResponse: JSON.stringify(currencyFee.medium),
+            feeHigh: FireblocksHelper.getFeeValueByAsset(c, currencyFee.high).value,
+            feeHighResponse: JSON.stringify(currencyFee.high),
+        });
     });
-});
+
+    cronFetcNetworkFeeSchedule.start();
+}
 
 
 console.log("cronJob start!!!");
-cronFetcNetworkFeeSchedule.start();

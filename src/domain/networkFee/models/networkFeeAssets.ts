@@ -18,7 +18,10 @@ export namespace NetworkFeeAsset {
         updatedAt: Date;
     };
 
-    export type viewT = T;
+    export type viewT = Omit<
+        T,
+        'id'
+    >;
 
     export type backofficeViewT = T;
 

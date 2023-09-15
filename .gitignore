@@ -69,3 +69,7 @@ database/migrations/20230630161214_create_transfer_histories_table.js
 # use yarn
 package-lock.json
 !yarn.lock
+
+fireblocks_secret.key
+fireblocks.csr
+wallet-monitoring-*
