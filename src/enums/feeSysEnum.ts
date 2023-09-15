@@ -1,0 +1,19 @@
+export enum FeeSysTypeEnum {
+    PAYMENT = 'PAYMENT',
+    TOPUP = 'TOPUP',
+    TRANSFER = 'TRANSFER',
+}
+
+export enum FeeSysTnxTypeEnum {
+    TRANSFER_BANK_TO_TRUEMONEY = 'TRANSFER_BANK_TO_TRUEMONEY',
+    TRANSFER_BANK_TO_E_WALLET = 'TRANSFER_BANK_TO_E_WALLET',
+    TRANSFER_BANK_TO_BANK = 'TRANSFER_BANK_TO_BANK',
+}
+
+export enum FeeSysStatusEnum {
+    PENDING = 'PENDING',
+    SUCCESS = 'SUCCESS',
+    ERROR = 'ERROR',
+    TIMEOUT = 'TIMEOUT',
+    REJECT = 'REJECT',
+}

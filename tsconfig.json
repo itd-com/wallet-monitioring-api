@@ -1,0 +1,67 @@
+{
+	"compilerOptions": {
+		"target": "ES2020",
+		"module": "commonjs",
+		"rootDirs": [
+			"src",
+			"tests"
+		],
+		"outDir": "dist",
+		"sourceMap": true,
+		"lib": [
+			"esnext",
+			"dom"
+		],
+		"forceConsistentCasingInFileNames": true,
+		"resolveJsonModule": true,
+		"esModuleInterop": true,
+		"strictNullChecks": true,
+		"skipLibCheck": true,
+		"baseUrl": ".",
+		"paths": {
+			"@config/*": [
+				"src/config/*"
+			],
+			"@config": [
+				"src/config/index.ts"
+			],
+			"@helpers/*": [
+				"src/helpers/*"
+			],
+			"@routers/*": [
+				"src/routers/*"
+			],
+			"@routers": [
+				"src/routers/index.ts"
+			],
+			"@transformer/*": [
+				"src/transformer/*"
+			],
+			"@domain/*": [
+				"src/domain/*"
+			],
+			"@controllers/*": [
+				"src/controllers/*"
+			],
+			"@hooks/*": [
+				"src/hooks/*"
+			],
+			"@enums/*": [
+				"src/enums/*"
+			],
+			"@tests/*": [
+				"tests/*"
+			],
+			"@client/*": [
+				"src/client/*"
+			],
+		}
+	},
+	"include": [
+		"tests/**/*.ts",
+		"src/**/*.ts"
+	],
+	"exclude": [
+		"node_modules"
+	]
+}

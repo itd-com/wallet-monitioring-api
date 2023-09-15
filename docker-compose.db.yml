@@ -1,0 +1,36 @@
+version: "3.8"
+
+networks:
+  metanet_network:
+    name: metanet_network
+    driver: bridge
+
+volumes:
+  bank_gateway_volume:
+    name: bank_gateway_volume
+
+services:
+  bank_gateway_db:
+    container_name: bank_gateway_db
+    platform: linux/x86_64
+    image: mysql:5.7
+    volumes:
+      - bank_gateway_volume:/var/lib/mysql
+    ports:
+      - ${DB_PORT:-3303}:3306
+    command: >
+      --default-authentication-plugin=mysql_native_password 
+      --character-set-server=utf8mb4 
+      --collation-server=utf8mb4_unicode_ci 
+      --default-time-zone=UTC 
+      --sql_mode="" 
+      --max_connections=1000
+    networks:
+      - metanet_network
+    environment:
+      MYSQL_DATABASE: $DB_NAME
+      MYSQL_USER: $DB_USER
+      MYSQL_PASSWORD: $DB_PASSWORD
+      MYSQL_ROOT_PASSWORD: root
+    restart: unless-stopped
+

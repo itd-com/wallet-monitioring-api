@@ -1,0 +1,13 @@
+export enum PaymentTypeEnum {
+	TRUEMONEY = 'TRUEMONEY',
+	BANK_TRANSFER = 'BANK_TRANSFER',
+	QR_CODE_PAYMENT = 'QR_CODE_PAYMENT',
+}
+
+export enum PaymentStatusEnum {
+	PENDING = 'PENDING',
+	SUCCESS = 'SUCCESS',
+	ERROR = 'ERROR',
+	TIMEOUT = 'TIMEOUT',
+	REJECT = 'REJECT',
+}

@@ -1,0 +1,8 @@
+export enum UserRoleEnum {
+    MY_APP = 'MY_APP',
+    CUSTOMER_READ_ONLY = 'CUSTOMER_READ_ONLY',
+    CUSTOMER = 'CUSTOMER',
+    ADMIN_READ_ONLY = 'ADMIN_READ_ONLY',
+    ADMIN = 'ADMIN',
+    SUPER_ADMIN = 'SUPER_ADMIN',
+}
