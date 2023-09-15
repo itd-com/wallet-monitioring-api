@@ -23,7 +23,7 @@ export namespace NetworkFeeController {
         } = request.query;
 
         let coins = ['BTC_TEST', 'ETH_TEST3'];
-        if (currency) {
+        if (currency !== 'ALL') {
             coins = coins.filter((v) => v === currency);
         }
         const networkFeeAssets: NetworkFeeAsset.viewT[] = [];
