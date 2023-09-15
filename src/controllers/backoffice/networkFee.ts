@@ -22,7 +22,7 @@ export namespace NetworkFeeController {
         const networkFeeAssets = await NetworkFeeAssetService.getManyByFilter(
             {
                 currency: currency != 'ALL' ? currency : undefined,
-                sortBy: sortBy ?? 'DESC',
+                sortBy: sortBy ?? 'desc',
                 dateFrom,
                 dateTo,
             },
@@ -51,7 +51,7 @@ export namespace NetworkFeeController {
         const networkFeeAssets = await NetworkFeeAssetService.getManyByFilter(
             {
                 currency: currency != 'ALL' ? currency : undefined,
-                sortBy: sortBy ?? 'DESC',
+                sortBy: sortBy ?? 'desc',
                 dateFrom,
                 dateTo,
             },

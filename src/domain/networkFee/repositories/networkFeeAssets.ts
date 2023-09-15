@@ -60,12 +60,8 @@ export namespace NetworkFeeAssetRepo {
 
 		if (currency) {
 			masterQuery.andWhere((queryBuilder) => {
-				queryBuilder.andWhereRaw('currency = ?', [`${currency}`]);
+				queryBuilder.andWhereRaw('baseCurrency = ?', [`${currency}`]);
 			});
-		}
-
-		if (sortBy && ['ASC', 'DESC'].includes(sortBy)) {
-			masterQuery.orderByRaw('createdAt', sortBy);
 		}
 
 		if (dateFrom) {
@@ -78,6 +74,10 @@ export namespace NetworkFeeAssetRepo {
 			masterQuery.andWhere((queryBuilder) => {
 				queryBuilder.andWhereRaw('DATE(CONVERT_TZ(createdAt, \'+00:00\', \'+07:00\')) <= ?', [`${dateTo}`]);
 			});
+		}
+
+		if (sortBy && ['asc', 'desc'].includes(sortBy)) {
+			masterQuery.orderBy('createdAt', sortBy);
 		}
 
 		return masterQuery.select();
