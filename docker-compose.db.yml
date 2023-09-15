@@ -1,21 +1,17 @@
 version: "3.8"
 
 networks:
-  metanet_network:
-    name: metanet_network
+  app_network:
+    name: app_network
     driver: bridge
 
-volumes:
-  bank_gateway_volume:
-    name: bank_gateway_volume
-
 services:
-  bank_gateway_db:
-    container_name: bank_gateway_db
+  wallet_monitioring_db:
+    container_name: wallet_monitioring_db
     platform: linux/x86_64
     image: mysql:5.7
     volumes:
-      - bank_gateway_volume:/var/lib/mysql
+      - ./mysql_data:/var/lib/mysql
     ports:
       - ${DB_PORT:-3303}:3306
     command: >
@@ -26,7 +22,7 @@ services:
       --sql_mode="" 
       --max_connections=1000
     networks:
-      - metanet_network
+      - app_network
     environment:
       MYSQL_DATABASE: $DB_NAME
       MYSQL_USER: $DB_USER

@@ -15,6 +15,7 @@ export namespace BackOfficeUserController {
 			const reqUser = AuthUserHook.getUserApi(request);
 
 			if (![
+				UserRoleEnum.ADMIN,
 				UserRoleEnum.SUPER_ADMIN,
 			].includes(reqUser.role)) {
 				throw new CustomError({

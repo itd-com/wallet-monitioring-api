@@ -10,7 +10,7 @@ module.exports = {
   context: path.resolve(__dirname, 'src'),
   entry: {
     index: ['src/index.ts'],
-    'src/command/cronJobs': ['src/command/cronJobs.ts'],
+    // 'src/command/cronJobs': ['src/command/cronJobs.ts'],
   },
   output: {
     filename: '[name].js',

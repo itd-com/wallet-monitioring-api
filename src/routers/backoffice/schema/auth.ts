@@ -49,9 +49,9 @@ export namespace AuthSchema {
         summary: 'Login API',
         body: {
             type: 'object',
-            required: ['username', 'password'],
+            required: ['usernameOrEmail', 'password'],
             properties: {
-                username: {
+                usernameOrEmail: {
                     type: 'string',
                     example: 'ta004',
                 },

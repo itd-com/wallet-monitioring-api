@@ -53,6 +53,9 @@ Thumbs.db
 sandbox.ts
 src/sandbox.ts
 
+# mysql data
+mysql_data
+
 openssl/
 privateKey.pem
 publicKey.pem

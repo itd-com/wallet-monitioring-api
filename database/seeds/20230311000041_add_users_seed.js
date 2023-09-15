@@ -1,5 +1,6 @@
-import crypto from 'crypto';
-import { addDays } from 'date-fns';
+const crypto = require('crypto');
+const addDays = require('date-fns/addDays');
+const { v4: uuidv4 } = require('uuid');
 
 require('dotenv').config();
 const fs = require('fs');

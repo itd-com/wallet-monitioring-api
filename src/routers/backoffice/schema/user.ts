@@ -10,7 +10,6 @@ export namespace BackOfficeUserSchema {
         body: {
             type: 'object',
             required: [
-                'serviceName',
                 'name',
                 'email',
                 'username',
