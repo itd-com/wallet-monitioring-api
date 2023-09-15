@@ -51,6 +51,8 @@ const envVarsSchema = joi
 
 		PRIVATE_KEY_PATH: joi.string().required(),
 		PUBLIC_KEY_PATH: joi.string().required(),
+
+		CRONJOB_FETCH_NETWORK_FEE_SCHEDULE: joi.string().required(),
 	})
 	.unknown();
 
@@ -80,5 +82,7 @@ export const config = {
 
 	PRIVATE_KEY_PATH: SetEnv.toString(envValidated.PRIVATE_KEY_PATH),
 	PUBLIC_KEY_PATH: SetEnv.toString(envValidated.PUBLIC_KEY_PATH),
+
+	CRONJOB_FETCH_NETWORK_FEE_SCHEDULE: SetEnv.toString(envValidated.CRONJOB_FETCH_NETWORK_FEE_SCHEDULE),
 
 };

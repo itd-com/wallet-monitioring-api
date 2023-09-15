@@ -5,6 +5,7 @@ import healthCheckRoute from './healthCheck/healthCheck';
 
 import authRoute from './backoffice/auth';
 import backOfficeUserRoute from './backoffice/user';
+import backOfficeNetworkFeeRoute from './backoffice/networkFee';
 
 const internalV1 = (_fastify: FastifyInstance) => {
 	const _prefix = `${config.apiPrefixInternal}`;
@@ -22,6 +23,7 @@ const backofficeV1 = (fastify: FastifyInstance) => {
 	// default external router
 	fastify.register(authRoute, { prefix: `${prefix}/v1` });
 	fastify.register(backOfficeUserRoute, { prefix: `${prefix}/v1` });
+	fastify.register(backOfficeNetworkFeeRoute, { prefix: `${prefix}/v1` });
 };
 
 export default async function router(fastify: FastifyInstance) {
