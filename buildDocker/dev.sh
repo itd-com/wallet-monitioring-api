@@ -1,4 +1,4 @@
 #!/bin/sh
 docker login
-docker build . --file Dockerfile --tag metanetcorp/bank-gateway-api-dev:latest
-docker push metanetcorp/bank-gateway-api-dev:latest
+docker build . --file Dockerfile --tag iamta/wallet-monitioring-api-dev:latest
+docker push iamta/wallet-monitioring-api-dev:latest
