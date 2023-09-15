@@ -22,7 +22,14 @@ export namespace NetworkFeeController {
             // dateTo,
         } = request.query;
 
-        let coins = ['BTC_TEST', 'ETH_TEST3'];
+        let coins = [
+            'BTC_TEST',
+            'ETH_TEST3',
+            'BNB_TEST',
+            'XLM_TEST',
+            'XRP_TEST',
+            'XTZ_TEST',
+        ];
         if (currency !== 'ALL') {
             coins = coins.filter((v) => v === currency);
         }
