@@ -1,6 +1,7 @@
 const cron = require('node-cron');
 import { config } from '@config/config';
 import { FireblocksService } from '@domain/fireblocks/services/fireblocks';
+import { NetworkFeeAsset } from '@domain/networkFee/models/networkFeeAssets';
 import { NetworkFeeAssetService } from '@domain/networkFee/services/networkFeeAssets';
 import { FireblocksHelper } from '@helpers/fireblocks';
 import { format, utcToZonedTime } from 'date-fns-tz';
@@ -18,7 +19,7 @@ for (const c of coins) {
         const newSdk = await FireblocksService.auth();
         const currencyFee = await FireblocksService.getFeeForAsset(newSdk, c);
 
-        await NetworkFeeAssetService.createOne({
+        const insertData: NetworkFeeAsset.storeT = {
             baseCurrency: c,
             unit: FireblocksHelper.getFeeUnitByAsset(c).unit,
             feeLow: FireblocksHelper.getFeeValueByAsset(c, currencyFee.low).value,
@@ -27,7 +28,11 @@ for (const c of coins) {
             feeMediumResponse: JSON.stringify(currencyFee.medium),
             feeHigh: FireblocksHelper.getFeeValueByAsset(c, currencyFee.high).value,
             feeHighResponse: JSON.stringify(currencyFee.high),
-        });
+        }
+
+        console.log(insertData);
+
+        await NetworkFeeAssetService.createOne(insertData);
     });
 
     cronFetcNetworkFeeSchedule.start();

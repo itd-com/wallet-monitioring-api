@@ -17,35 +17,6 @@ export namespace NetworkFeeController {
 
         const {
             currency,
-            sortBy,
-            dateFrom,
-            dateTo,
-        } = request.query;
-
-        const networkFeeAssets = await NetworkFeeAssetService.getManyByFilter(
-            {
-                currency: currency != 'ALL' ? currency : undefined,
-                sortBy: sortBy ?? 'desc',
-                dateFrom,
-                dateTo,
-            },
-        );
-        if (!networkFeeAssets) {
-            throw new CustomError({
-                statusCode: 404,
-                message: `NETWORK_FEE_NOT_FOUND`,
-            });
-        }
-
-        const response: BackOfficeNetworkFeeTransformer.getCurrent.ResponseData = networkFeeAssets;
-        return reply.code(200).send(response);
-    };
-
-    export const getSchedule = async (request: BackOfficeNetworkFeeTransformer.getCurrent.Request, reply: FastifyReply) => {
-        const reqUser = AuthUserHook.getUserApi(request);
-
-        const {
-            currency,
             // sortBy,
             // dateFrom,
             // dateTo,
@@ -78,5 +49,36 @@ export namespace NetworkFeeController {
         const response: BackOfficeNetworkFeeTransformer.getCurrent.ResponseData = networkFeeAssets;
         return reply.code(200).send(response);
     };
+
+    export const getSchedule = async (request: BackOfficeNetworkFeeTransformer.getSchedule.Request, reply: FastifyReply) => {
+        const reqUser = AuthUserHook.getUserApi(request);
+
+        const {
+            currency,
+            sortBy,
+            dateFrom,
+            dateTo,
+        } = request.query;
+
+        const networkFeeAssets = await NetworkFeeAssetService.getManyByFilter(
+            {
+                currency: currency != 'ALL' ? currency : undefined,
+                sortBy: sortBy ?? 'desc',
+                dateFrom,
+                dateTo,
+            },
+        );
+        if (!networkFeeAssets) {
+            throw new CustomError({
+                statusCode: 404,
+                message: `NETWORK_FEE_NOT_FOUND`,
+            });
+        }
+
+        const response: BackOfficeNetworkFeeTransformer.getSchedule.ResponseData = networkFeeAssets;
+        return reply.code(200).send(response);
+    };
+
+
 
 }

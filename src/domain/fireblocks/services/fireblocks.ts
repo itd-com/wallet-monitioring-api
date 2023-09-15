@@ -5,8 +5,7 @@ import { EstimateFeeResponse, FireblocksSDK, InternalWalletAsset } from 'fireblo
 import { config } from '@config/config';
 
 
-const keyPath = path.resolve(__dirname, config.fireblocks.secretKeyPath);
-const apiSecret = config.fireblocks.secretKeyPath === '' || !fs.existsSync(keyPath) ? '' : fs.readFileSync(keyPath, 'utf8');
+const apiSecret = fs.readFileSync(process.cwd() + config.fireblocks.secretKeyPath, 'utf-8');
 const apiKey = config.fireblocks.apiKey;
 const apiEndpoint = config.fireblocks.endpoint;
 
