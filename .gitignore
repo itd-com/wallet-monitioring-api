@@ -50,9 +50,12 @@ Thumbs.db
 *.wmv
 
 # file sandbox
+sandbox.ts
 src/sandbox.ts
 
 openssl/
+privateKey.pem
+publicKey.pem
 database/seeds/20230311000050_add_account*
 database/migrations/20230630161214_create_transfer_histories_table.js
 .env

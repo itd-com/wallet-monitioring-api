@@ -1,17 +1,17 @@
-import { User } from "@domain/account/models/users";
-import { FastifyRequest } from "fastify";
+import { User } from '@domain/user/models/users';
+import { FastifyRequest } from 'fastify';
 
 export namespace BackOfficeAuthTransformer {
     export namespace getMe {
         export type Request = FastifyRequest;
 
-        export type ResponseData = User.backofficeViewT;
+        export type ResponseData = User.viewT;
     }
 
     export namespace login {
         export type Request = FastifyRequest<{
             Body: {
-                username: string;
+                usernameOrEmail: string;
                 password: string;
             }
         }>;

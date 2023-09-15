@@ -1,11 +1,11 @@
-import { CustomError } from "@helpers/customError";
-import { Utils } from "@helpers/utils";
-import { BackOfficeAuthTransformer } from "@transformer/backoffice/auth";
+import { CustomError } from '@helpers/customError';
+import { Utils } from '@helpers/utils';
+import { BackOfficeAuthTransformer } from '@transformer/backoffice/auth';
 import { addDays } from 'date-fns';
-import { FastifyReply } from "fastify";
-import { UserService } from "@domain/account/services/users";
-import { OpensslHelper } from "@helpers/openssl";
-import { AuthUserHook } from "@hooks/authUser";
+import { FastifyReply } from 'fastify';
+import { UserService } from '@domain/user/services/users';
+import { OpensslHelper } from '@helpers/openssl';
+import { AuthUserHook } from '@hooks/authUser';
 
 export namespace AuthController {
     export const getMe = async (request: BackOfficeAuthTransformer.getMe.Request, reply: FastifyReply) => {
@@ -24,34 +24,42 @@ export namespace AuthController {
             {
                 ...user,
             },
-            []
+            [
+                'passwordEcd',
+                'apiTokenExpire',
+                'externalApiToken',
+                'externalApiTokenExpire',
+            ],
         );
         return reply.code(200).send(response);
     };
 
     export const login = async (request: BackOfficeAuthTransformer.login.Request, reply: FastifyReply) => {
-        const { username, password } = request.body;
+        const { usernameOrEmail, password } = request.body;
 
-        const user = await UserService.getOneByCondition({
-            username,
+        const findEmail = await UserService.getOneByCondition({
+            email: usernameOrEmail,
         });
+        const findUsername = await UserService.getOneByCondition({
+            username: usernameOrEmail,
+        });
+        const user = findEmail || findUsername;
         if (!user) {
             throw new CustomError({
                 statusCode: 422,
-                message: `INVALID_USER`,
+                message: `INVALID_AUTH`,
             });
         }
 
         if ((password.trim() !== OpensslHelper.privateDecrypt(user.passwordEcd))) {
             throw new CustomError({
                 statusCode: 422,
-                message: `INVALID_USER`,
+                message: `INVALID_AUTH`,
             });
         }
 
-        const newAccessToken = OpensslHelper.publicEncrypt(user.username);
-
         const newAccessTokenExpire = addDays(new Date(), 1);
+        const newAccessToken = OpensslHelper.publicEncrypt(`${user.username}=${newAccessTokenExpire.toISOString()}`);
 
         await UserService.updateOneById(user.id, {
             accessToken: newAccessToken,
@@ -68,7 +76,7 @@ export namespace AuthController {
                 'passwordEcd',
                 'apiTokenExpire',
                 'externalApiToken',
-                'externalApiTokenExpire'
+                'externalApiTokenExpire',
             ],
         );
         return reply.code(200).send(response);

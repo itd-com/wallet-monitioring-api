@@ -1,6 +1,4 @@
 import { UserRoleEnum } from '@enums/userEnum';
-import { BankAccount } from './bankAccounts';
-import { BankApp } from './bankApps';
 
 export namespace User {
     export const TableName = 'users';
@@ -8,7 +6,6 @@ export namespace User {
     export type T = {
 
         id: number;
-        serviceName: string;
 
         name: string;
         email: string;
@@ -30,11 +27,7 @@ export namespace User {
         updatedAt: Date;
     };
 
-    export type apiT = T & {
-        bankApp: BankApp.Decrypted,
-        bankAccountActive: BankAccount.T,
-        bankAccounts: BankAccount.T[],
-    };
+    export type apiT = T;
 
     export type viewT = Omit<
         T,

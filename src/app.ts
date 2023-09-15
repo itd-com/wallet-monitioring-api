@@ -13,7 +13,7 @@ import { CustomError } from './helpers/customError';
 import logger from './helpers/logger';
 import sanitizeXSS from './helpers/sanitizeXSS';
 import trimSpace from './helpers/trimSpace';
-import { User } from '@domain/account/models/users';
+import { User } from '@domain/user/models/users';
 
 declare module 'fastify' {
 	interface FastifyRequest {

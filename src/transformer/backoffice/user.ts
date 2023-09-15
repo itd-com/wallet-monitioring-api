@@ -1,4 +1,4 @@
-import { User } from '@domain/account/models/users';
+import { User } from '@domain/user/models/users';
 import { UserRoleEnum } from '@enums/userEnum';
 import { FastifyRequest } from 'fastify';
 
@@ -6,8 +6,6 @@ export namespace BackOfficeUserTransformer {
     export namespace createUser {
         export type Request = FastifyRequest<{
             Body: {
-                serviceName: string;
-
                 name: string;
                 email: string;
                 username: string;
@@ -41,21 +39,16 @@ export namespace BackOfficeUserTransformer {
                 userId: number;
             };
             Body: {
-                serviceName?: string;
-
                 name?: string;
                 email?: string;
                 username?: string;
                 password?: string;
                 role?: UserRoleEnum;
 
-                accessToken?: string;
                 accessTokenExpire?: string;
 
-                apiToken?: string;
                 apiTokenExpire?: string;
 
-                externalApiToken?: string;
                 externalApiTokenExpire?: string;
             }
         }>;

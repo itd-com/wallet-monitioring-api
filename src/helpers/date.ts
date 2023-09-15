@@ -13,7 +13,6 @@ export namespace DateHelper {
     };
 
     export const getNowThai = (): string => {
-
         const { DateTime } = require('luxon');
 
         // กำหนดโซนเวลาของประเทศไทย
@@ -23,6 +22,6 @@ export namespace DateHelper {
         const currentTime = DateTime.now().setZone(timeZone).setLocale('th').toFormat('dd MMM yyyy เวลา HH:mm');
 
         return currentTime;
-    }
+    };
 
 }

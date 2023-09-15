@@ -1,4 +1,5 @@
-import { response } from '../../schema/_default';
+import { response } from './_default';
+
 const tags = ['Backoffice Auth'];
 
 export namespace AuthSchema {
@@ -13,7 +14,6 @@ export namespace AuthSchema {
                 type: 'object',
                 properties: {
                     id: { type: 'number', example: 1 },
-                    serviceName: { type: 'string', example: 'iamta.info.com' },
 
                     name: { type: 'string', example: 'Ta Developer' },
                     email: { type: 'string', example: 'iamta.dev@gmail.com' },
@@ -25,14 +25,14 @@ export namespace AuthSchema {
                     accessToken: { type: 'string', example: 'XGaOefguBVwl....Q8lXI0zxsJ0Fsb' },
                     accessTokenExpire: { type: 'string', example: '2023-09-26 03:28:57' },
 
-                    apiToken: { type: 'string', example: 'XGaOefguBVwl....Q8lXI0zxsJ0Fsb' },
-                    apiTokenExpire: { type: 'string', example: '2023-09-26 03:28:57' },
+                    // apiToken: { type: 'string', example: 'XGaOefguBVwl....Q8lXI0zxsJ0Fsb' },
+                    // apiTokenExpire: { type: 'string', example: '2023-09-26 03:28:57' },
 
-                    externalApiToken: { type: 'string', example: 'XGaOefguBVwl....Q8lXI0zxsJ0Fsb' },
-                    externalApiTokenExpire: { type: 'string', example: '2023-09-26 03:28:57' },
+                    // externalApiToken: { type: 'string', example: 'XGaOefguBVwl....Q8lXI0zxsJ0Fsb' },
+                    // externalApiTokenExpire: { type: 'string', example: '2023-09-26 03:28:57' },
 
                     createdAt: { type: 'string', example: '2023-09-26 03:28:57' },
-                    updatedAt: { type: 'string', example: '2023-09-26 03:28:57' }
+                    updatedAt: { type: 'string', example: '2023-09-26 03:28:57' },
                 },
             },
             401: response['401'],
@@ -67,7 +67,6 @@ export namespace AuthSchema {
                 type: 'object',
                 properties: {
                     id: { type: 'number', example: 1 },
-                    serviceName: { type: 'string', example: 'iamta.info.com' },
 
                     name: { type: 'string', example: 'Ta Developer' },
                     email: { type: 'string', example: 'iamta.dev@gmail.com' },
@@ -86,7 +85,7 @@ export namespace AuthSchema {
                     // externalApiTokenExpire: { type: 'string', example: '2023-09-26 03:28:57' },
 
                     createdAt: { type: 'string', example: '2023-09-26 03:28:57' },
-                    updatedAt: { type: 'string', example: '2023-09-26 03:28:57' }
+                    updatedAt: { type: 'string', example: '2023-09-26 03:28:57' },
                 },
             },
             401: response['401'],

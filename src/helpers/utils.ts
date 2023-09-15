@@ -43,14 +43,14 @@ export namespace Utils {
 		}
 		const randomIndex = Math.floor(Math.random() * randomIndexLength);
 		return array[randomIndex];
-	}
+	};
 
 	export const genToken = (): string => {
-		var rand = function () {
+		const rand = () => {
 			return `${Math.random().toString(36)}`.substring(2); // remove `0.`
 		};
 
 		return rand() + rand() + rand(); // to make it longer
-	}
+	};
 
 }

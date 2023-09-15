@@ -40,8 +40,6 @@ const envVarsSchema = joi
 		CORS_URLS: joi.string().required(),
 		INTERNAL_API_TOKEN: joi.string().required(),
 
-		PIN_ENCRYPT_BASE_URL: joi.string().required(),
-
 		/**
 		 * DB Config Validation
 		 */
@@ -53,24 +51,6 @@ const envVarsSchema = joi
 
 		PRIVATE_KEY_PATH: joi.string().required(),
 		PUBLIC_KEY_PATH: joi.string().required(),
-
-		FEE_SYS_TRUEMONNER_NUMBER: joi.string().required(),
-		FEE_SYS_E_WALLET_NUMBER: joi.string().required(),
-		// FEE_SYS_RATE: joi.string().required(),
-
-		BANK_API_AUTH_EXPIRE_MINTES: joi.number().required().positive().allow(0),
-		BANK_PAYMENT_TIMEOUT_MINTES: joi.number().required().positive(),
-		BANK_TOPUP_TIMEOUT_MINTES: joi.number().required().positive(),
-
-		MIN_ACCOUNT_BALANCE_NOTIFY: joi.number().required().positive(),
-
-		TOPUP_TO_NUMBER_LIMIT_IN_24_HOURS: joi.number().required().positive(),
-		BANK_ACCOUNT_TOPUP_LIMIT_PER_DAY: joi.number().required().positive(),
-		SWITCH_BANK_ACCOUNT_BALANCE_MINIMUM: joi.number().required().positive(),
-
-		CRONJOB_RESET_BANK_ACCOUNT_SCHEDULE: joi.string().required(),
-		CRONJOB_NOTIFY_BANK_ACCOUNT_SUMMARY_SCHEDULE: joi.string().required(),
-		CRONJOB_NOTIFY_BANK_ACCOUNT_SUMMARY_EX_API_TOKEN: joi.string().required(),
 	})
 	.unknown();
 
@@ -83,16 +63,14 @@ if (error) {
 export const config = {
 	env: SetEnv.toString(envValidated.NODE_ENV),
 	port: SetEnv.toInteger(envValidated.PORT),
-	apiPrefix: `/api/${process.env.SERVICE_NAME || 'bank-gateway'}`,
-	apiPrefixInternal: `/api/${process.env.SERVICE_NAME || '_bank-gateway'}`,
+	apiPrefix: `/api/${process.env.SERVICE_NAME || 'wm'}`,
+	apiPrefixInternal: `/api/${process.env.SERVICE_NAME || '_wm'}`,
 	fastifyLogger: SetEnv.toBoolean(process.env.FASTIFY_LOGGER ?? true),
 	appUrl: SetEnv.toString(envValidated.APP_URL),
 	corsUrls: SetEnv.toString(envValidated.CORS_URLS).split(','),
 	internalApiToken: SetEnv.toString(envValidated.INTERNAL_API_TOKEN),
 	xssSanitizeIgnoreKeys: process.env.XSS_SANITIZE_IGNORE_KEYS || 'file,_internalSDKData',
 	sentryDsn: process.env.SENTRY_DSN || '',
-
-	PIN_ENCRYPT_BASE_URL: SetEnv.toString(envValidated.PIN_ENCRYPT_BASE_URL),
 
 	DB_HOST: SetEnv.toString(envValidated.DB_HOST),
 	DB_PORT: SetEnv.toInteger(envValidated.DB_PORT),
@@ -103,21 +81,4 @@ export const config = {
 	PRIVATE_KEY_PATH: SetEnv.toString(envValidated.PRIVATE_KEY_PATH),
 	PUBLIC_KEY_PATH: SetEnv.toString(envValidated.PUBLIC_KEY_PATH),
 
-	FEE_SYS_TRUEMONNER_NUMBER: SetEnv.toString(envValidated.FEE_SYS_TRUEMONNER_NUMBER),
-	FEE_SYS_E_WALLET_NUMBER: SetEnv.toString(envValidated.FEE_SYS_E_WALLET_NUMBER),
-	// FEE_SYS_RATE: SetEnv.toString(envValidated.FEE_SYS_RATE),
-
-	BANK_API_AUTH_EXPIRE_MINTES: SetEnv.toInteger(envValidated.BANK_API_AUTH_EXPIRE_MINTES),
-	BANK_PAYMENT_TIMEOUT_MINTES: SetEnv.toInteger(envValidated.BANK_PAYMENT_TIMEOUT_MINTES),
-	BANK_TOPUP_TIMEOUT_MINTES: SetEnv.toInteger(envValidated.BANK_TOPUP_TIMEOUT_MINTES),
-
-	MIN_ACCOUNT_BALANCE_NOTIFY: SetEnv.toInteger(envValidated.MIN_ACCOUNT_BALANCE_NOTIFY),
-
-	TOPUP_TO_NUMBER_LIMIT_IN_24_HOURS: SetEnv.toNumber(envValidated.TOPUP_TO_NUMBER_LIMIT_IN_24_HOURS),
-	BANK_ACCOUNT_TOPUP_LIMIT_PER_DAY: SetEnv.toNumber(envValidated.BANK_ACCOUNT_TOPUP_LIMIT_PER_DAY),
-	SWITCH_BANK_ACCOUNT_BALANCE_MINIMUM: SetEnv.toNumber(envValidated.SWITCH_BANK_ACCOUNT_BALANCE_MINIMUM),
-
-	CRONJOB_RESET_BANK_ACCOUNT_SCHEDULE: SetEnv.toString(envValidated.CRONJOB_RESET_BANK_ACCOUNT_SCHEDULE),
-	CRONJOB_NOTIFY_BANK_ACCOUNT_SUMMARY_SCHEDULE: SetEnv.toString(envValidated.CRONJOB_NOTIFY_BANK_ACCOUNT_SUMMARY_SCHEDULE),
-	CRONJOB_NOTIFY_BANK_ACCOUNT_SUMMARY_EX_API_TOKEN: SetEnv.toString(envValidated.CRONJOB_NOTIFY_BANK_ACCOUNT_SUMMARY_EX_API_TOKEN),
 };

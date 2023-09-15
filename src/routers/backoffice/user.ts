@@ -1,4 +1,3 @@
-import { AuthController } from '@controllers/backoffice/auth';
 import { FastifyInstance } from 'fastify';
 import { BackOfficeUserSchema } from './schema/user';
 import { CommonValidator } from '@hooks/common';
@@ -39,7 +38,7 @@ const backOfficeUserRoute = async (app: FastifyInstance) => {
         },
         BackOfficeUserController.getUserById,
     );
-    app.post(
+    app.put(
         '/user/:userId',
         {
             schema: BackOfficeUserSchema.updateUserById,

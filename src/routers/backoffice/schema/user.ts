@@ -1,4 +1,5 @@
 import { response } from './_default';
+
 const tags = ['Backoffice User'];
 
 export namespace BackOfficeUserSchema {
@@ -17,7 +18,6 @@ export namespace BackOfficeUserSchema {
                 'role',
             ],
             properties: {
-                serviceName: { type: 'string', example: 'serviceName' },
                 name: { type: 'string', example: 'name' },
                 email: { type: 'string', example: 'email' },
                 username: { type: 'string', example: 'username' },
