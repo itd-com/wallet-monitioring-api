@@ -9,7 +9,14 @@ import { format, utcToZonedTime } from 'date-fns-tz';
 
 const CRONJOB_RESET_BANK_ACCOUNT_SCHEDULE = config.CRONJOB_FETCH_NETWORK_FEE_SCHEDULE;
 
-const coins = ['BTC_TEST', 'ETH_TEST3'];
+const coins = [
+    'BTC_TEST',
+    'ETH_TEST3',
+    'BNB_TEST',
+    'XLM_TEST',
+    'XRP_TEST',
+    'XTZ_TEST',
+];
 
 for (const c of coins) {
     const cronFetcNetworkFeeSchedule = cron.schedule(CRONJOB_RESET_BANK_ACCOUNT_SCHEDULE, async () => {
