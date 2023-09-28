@@ -28,17 +28,47 @@ export namespace AssetController {
             });
         }
 
-        const imageList = {
-            "BTC_TEST": "https://trade-static.xspringdigital.com/1301/BTC.png",
-            "ETC_TEST": "https://trade-static.xspringdigital.com/1307/ETH.png",
-            "XTZ_TEST": "https://trade-static.xspringdigital.com/1298/XTZ.png",
-            "ETH_TEST3": "https://trade-static.xspringdigital.com/1307/ETH.png",
-            "XRP_TEST": null,
-            "XLM_TEST": "https://trade-static.xspringdigital.com/1258/XML.png",
-            "BNB_TEST": null,
-            "USDC_TEST3": "https://trade-static.xspringdigital.com/36683/USDC.png",
-            "BUSD_BSC_TEST": null,
-            "USDT_BSC_TEST": "https://trade-static.xspringdigital.com/1254/USDT.png",
+        const mapTokenData = {
+            "BTC_TEST": {
+                tokenImgUrl: "https://trade-static.xspringdigital.com/1301/BTC.png",
+                colorCode: "#F9AC53",
+            },
+            "ETC_TEST": {
+                tokenImgUrl: "https://trade-static.xspringdigital.com/1307/ETH.png",
+                colorCode: "#617EEA",
+            },
+            "XTZ_TEST": {
+                tokenImgUrl: "https://trade-static.xspringdigital.com/1298/XTZ.png",
+                colorCode: "#0063FF",
+            },
+            "ETH_TEST3": {
+                tokenImgUrl: "https://trade-static.xspringdigital.com/1307/ETH.png",
+                colorCode: "#617EEA",
+            },
+            "XRP_TEST": {
+                tokenImgUrl: "https://s3.coinmarketcap.com/static-gravity/image/79ada5fd9cb048f799ed40d4d24c1f92.png",
+                colorCode: "#23292F",
+            },
+            "XLM_TEST": {
+                tokenImgUrl: "https://trade-static.xspringdigital.com/1258/XML.png",
+                colorCode: "#999999",
+            },
+            "BNB_TEST": {
+                tokenImgUrl: null,
+                colorCode: "#F3BA2E",
+            },
+            "USDC_TEST3": {
+                tokenImgUrl: "https://trade-static.xspringdigital.com/36683/USDC.png",
+                colorCode: "#2671C4",
+            },
+            "BUSD_BSC_TEST": {
+                tokenImgUrl: null,
+                colorCode: "#F9DC9C",
+            },
+            "USDT_BSC_TEST": {
+                tokenImgUrl: "https://trade-static.xspringdigital.com/1254/USDT.png",
+                colorCode: "#1BA27A",
+            },
         }
 
         const l = vaultAccount.assets.length;
@@ -46,7 +76,8 @@ export namespace AssetController {
         const assetWallets: Asset.wallet[] = vaultAccount.assets.map((v) => {
             return {
                 token: v.id,
-                tokenImgUrl: imageList[v.id] ?? null,
+                tokenImgUrl: mapTokenData[v.id]?.tokenImgUrl ?? null,
+                colorCode: mapTokenData[v.id]?.colorCode ?? '#E8E8E8',
                 fireblock: v.available ?? '0.00',
                 apg: '0.00',
                 binance: '0.00',
