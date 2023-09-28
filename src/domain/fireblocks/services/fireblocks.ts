@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 import path from 'path';
-import { EstimateFeeResponse, FireblocksSDK, InternalWalletAsset } from 'fireblocks-sdk';
+import { EstimateFeeResponse, FireblocksSDK, InternalWalletAsset, VaultAccountResponse } from 'fireblocks-sdk';
 import { config } from '@config/config';
 
 
@@ -14,5 +14,9 @@ export namespace FireblocksService {
 
 	export const getFeeForAsset = async (sdk: FireblocksSDK, asset: string): Promise<EstimateFeeResponse> => {
 		return sdk.getFeeForAsset(asset);
+	};
+
+	export const getVaultAccountById = async (sdk: FireblocksSDK, vaultAccountId: string): Promise<VaultAccountResponse> => {
+		return sdk.getVaultAccountById(vaultAccountId);
 	};
 }
