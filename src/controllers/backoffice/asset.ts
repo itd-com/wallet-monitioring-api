@@ -30,44 +30,60 @@ export namespace AssetController {
 
         const mapTokenData = {
             "BTC_TEST": {
-                tokenImgUrl: "https://trade-static.xspringdigital.com/1301/BTC.png",
+                tokenImgUrl: "https://s3.coinmarketcap.com/static-gravity/image/6fbea0356edd48a4a68a4b877195443c.png",
                 colorCode: "#F9AC53",
             },
             "ETC_TEST": {
-                tokenImgUrl: "https://trade-static.xspringdigital.com/1307/ETH.png",
+                tokenImgUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
+                colorCode: "#617EEA",
+            },
+            "ETH_TEST2": {
+                tokenImgUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
+                colorCode: "#617EEA",
+            },
+            "ETH_TEST3": {
+                tokenImgUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
                 colorCode: "#617EEA",
             },
             "XTZ_TEST": {
-                tokenImgUrl: "https://trade-static.xspringdigital.com/1298/XTZ.png",
+                tokenImgUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/2011.png",
                 colorCode: "#0063FF",
-            },
-            "ETH_TEST3": {
-                tokenImgUrl: "https://trade-static.xspringdigital.com/1307/ETH.png",
-                colorCode: "#617EEA",
             },
             "XRP_TEST": {
                 tokenImgUrl: "https://s3.coinmarketcap.com/static-gravity/image/79ada5fd9cb048f799ed40d4d24c1f92.png",
                 colorCode: "#23292F",
             },
             "XLM_TEST": {
-                tokenImgUrl: "https://trade-static.xspringdigital.com/1258/XML.png",
+                tokenImgUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/512.png",
                 colorCode: "#999999",
             },
             "BNB_TEST": {
-                tokenImgUrl: null,
+                tokenImgUrl: "https://s3.coinmarketcap.com/static-gravity/image/3d7e590619f0473192c650300c91e247.png",
                 colorCode: "#F3BA2E",
             },
             "USDC_TEST3": {
-                tokenImgUrl: "https://trade-static.xspringdigital.com/36683/USDC.png",
+                tokenImgUrl: "https://s3.coinmarketcap.com/static-gravity/image/5a8229787b5e4c809b5914eef709b59a.png",
                 colorCode: "#2671C4",
             },
             "BUSD_BSC_TEST": {
-                tokenImgUrl: null,
+                tokenImgUrl: "https://s3.coinmarketcap.com/static/img/portraits/62da512ff192d82df80012bb.png",
                 colorCode: "#F9DC9C",
             },
             "USDT_BSC_TEST": {
-                tokenImgUrl: "https://trade-static.xspringdigital.com/1254/USDT.png",
+                tokenImgUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png",
                 colorCode: "#1BA27A",
+            },
+            "SOL_TEST": {
+                tokenImgUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/4687.png",
+                colorCode: "#F3BA2E",
+            },
+            "MATIC_TEST3": {
+                tokenImgUrl: "https://s3.coinmarketcap.com/static-gravity/image/b8db9a2ac5004c1685a39728cdf4e100.png",
+                colorCode: "#7F3CE0",
+            },
+            "MATIC_FBKS_TEST3": {
+                tokenImgUrl: "https://s3.coinmarketcap.com/static-gravity/image/b8db9a2ac5004c1685a39728cdf4e100.png",
+                colorCode: "#7F3CE0",
             },
         }
 
