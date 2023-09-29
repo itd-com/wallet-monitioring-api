@@ -1,7 +1,7 @@
 export namespace Asset {
     export type wallet = {
         token: string;
-        tokenImgUrl: string | null;
+        tokenImgUrl: string;
         colorCode: string;
         fireblock: string;
         apg: string;
