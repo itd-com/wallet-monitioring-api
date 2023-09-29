@@ -6,6 +6,7 @@ import { NetworkFeeAssetService } from '@domain/networkFee/services/networkFeeAs
 import { OnchainTxnService } from '@domain/txn/services/onchainTxn';
 import { FireblocksHelper } from '@helpers/fireblocks';
 import { Utils } from '@helpers/utils';
+import axios from 'axios';
 import { format, utcToZonedTime } from 'date-fns-tz';
 import Decimal from 'decimal.js';
 
@@ -58,8 +59,8 @@ const cronFetcTxnMempoolSchedule = cron.schedule(CRONJOB_FETC_TXN_MEMPOOL_SCHEDU
     const startAt = format(utcToZonedTime(now, 'Asia/Bangkok'), 'yyyy-MM-dd HH:mm:ss (O)');
     console.log(`RUN:BTC_TEST:FetcTxnMempool: ${startAt}`);
     try {
-        const response = await fetch('https://blockstream.info/testnet/api/mempool/recent');
-        const data = await response.json();
+        const response = await axios.get('https://blockstream.info/testnet/api/mempool/recent');
+        const data = await response.data;
 
         if (data && data.length > 0) {
             for (const transaction of data) {
