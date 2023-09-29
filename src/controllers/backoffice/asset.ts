@@ -92,7 +92,7 @@ export namespace AssetController {
         const assetWallets: Asset.wallet[] = vaultAccount.assets.map((v) => {
             return {
                 token: v.id,
-                tokenImgUrl: mapTokenData[v.id]?.tokenImgUrl ?? null,
+                tokenImgUrl: mapTokenData[v.id]?.tokenImgUrl ?? 'https://s2.coinmarketcap.com/static/img/coins/64x64/4687.png',
                 colorCode: mapTokenData[v.id]?.colorCode ?? '#E8E8E8',
                 fireblock: v.available ?? '0.00',
                 apg: '0.00',
