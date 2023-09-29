@@ -7,6 +7,7 @@ import authRoute from './backoffice/auth';
 import backOfficeUserRoute from './backoffice/user';
 import backOfficeNetworkFeeRoute from './backoffice/networkFee';
 import backOfficeAssetRoute from './backoffice/asset';
+import onchainTxnRoute from './backoffice/onchainTxn';
 
 const internalV1 = (_fastify: FastifyInstance) => {
 	const _prefix = `${config.apiPrefixInternal}`;
@@ -26,6 +27,7 @@ const backofficeV1 = (fastify: FastifyInstance) => {
 	fastify.register(backOfficeUserRoute, { prefix: `${prefix}/v1` });
 	fastify.register(backOfficeNetworkFeeRoute, { prefix: `${prefix}/v1` });
 	fastify.register(backOfficeAssetRoute, { prefix: `${prefix}/v1` });
+	fastify.register(onchainTxnRoute, { prefix: `${prefix}/v1` });
 };
 
 export default async function router(fastify: FastifyInstance) {
