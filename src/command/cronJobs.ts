@@ -3,12 +3,14 @@ import { config } from '@config/config';
 import { FireblocksService } from '@domain/fireblocks/services/fireblocks';
 import { NetworkFeeAsset } from '@domain/networkFee/models/networkFeeAssets';
 import { NetworkFeeAssetService } from '@domain/networkFee/services/networkFeeAssets';
+import { OnchainTxnService } from '@domain/txn/services/onchainTxn';
 import { FireblocksHelper } from '@helpers/fireblocks';
 import { Utils } from '@helpers/utils';
 import { format, utcToZonedTime } from 'date-fns-tz';
+import Decimal from 'decimal.js';
 
 const CRONJOB_RESET_BANK_ACCOUNT_SCHEDULE = config.CRONJOB_FETCH_NETWORK_FEE_SCHEDULE;
-
+const CRONJOB_FETC_TXN_MEMPOOL_SCHEDULE = config.CRONJOB_FETC_TXN_MEMPOOL_SCHEDULE;
 const coins = [
     'BTC_TEST',
     'ETH_TEST3',
@@ -46,15 +48,56 @@ for (const c of coins) {
             console.log(error);
         }
 
-
-
-
-
-
     });
 
     cronFetcNetworkFeeSchedule.start();
 }
+
+const cronFetcTxnMempoolSchedule = cron.schedule(CRONJOB_FETC_TXN_MEMPOOL_SCHEDULE, async () => {
+    const now = new Date();
+    const startAt = format(utcToZonedTime(now, 'Asia/Bangkok'), 'yyyy-MM-dd HH:mm:ss (O)');
+    console.log(`RUN:BTC_TEST:FetcTxnMempool: ${startAt}`);
+    try {
+        const response = await fetch('https://blockstream.info/testnet/api/mempool/recent');
+        const data = await response.json();
+
+        if (data && data.length > 0) {
+            for (const transaction of data) {
+                const txid = transaction.txid;
+
+                const find = await OnchainTxnService.getOneByCondition({
+                    txnID: txid,
+                })
+
+                if (!find) {
+                    const value = new Decimal(`${transaction.value}`).div(new Decimal(1e8));
+                    const size = transaction.vsize;
+                    const fee = transaction.fee;
+                    const feeRateSat = new Decimal(`${fee}`).div(new Decimal(size));
+                    const feeRate = feeRateSat.div(new Decimal(1e8));
+
+                    await OnchainTxnService.createOne({
+                        baseCurrency: 'BTC_TEST',
+                        txnID: `${txid}`,
+                        value: new Decimal(value).toFixed(),
+                        networkFee: new Decimal(feeRateSat).toFixed(1),
+                        networkFeeUnit: 'sat/vB',
+                        txnAt: new Date(),
+                        fee: new Decimal(feeRate).toFixed(),
+                        feeUnit: 'BTC_TEST'
+                    });
+                }
+
+            }
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
+
+});
+
+cronFetcTxnMempoolSchedule.start();
 
 
 console.log("cronJob start!!!");

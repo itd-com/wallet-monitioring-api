@@ -5,7 +5,7 @@ import { FastifyReply } from 'fastify';
 import { AuthUserHook } from '@hooks/authUser';
 import Decimal from 'decimal.js';
 import { BackOfficeOnchainTxnTransformer } from '@transformer/backoffice/onchainTxn';
-import { OnchainTxnService } from '@domain/txn/services/networkFeeAssets';
+import { OnchainTxnService } from '@domain/txn/services/onchainTxn';
 
 export namespace OnchainTxnController {
     export const getOnchainTestnet = async (request: BackOfficeOnchainTxnTransformer.getOnchainTestnet.Request, reply: FastifyReply) => {
