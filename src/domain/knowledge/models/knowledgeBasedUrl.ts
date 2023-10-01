@@ -27,4 +27,11 @@ export namespace KnowledgeBasedUrl {
         'updatedAt'
     >;
 
+    export type updateT = Partial<Omit<
+        T,
+        'id' |
+        'createdAt' |
+        'updatedAt'
+    >>;
+
 }

@@ -43,4 +43,12 @@ export namespace KnowledgeBasedUrlRepo {
 		}
 	};
 
+	export const updateOneById = async (id: number, data: KnowledgeBasedUrl.updateT) => {
+		return Db.conn(knowledgeBasedUrlTable).where({ id }).update(data);
+	};
+
+	export const deleteOneById = async (id: number) => {
+		return Db.conn(knowledgeBasedUrlTable).where({ id }).delete();
+	};
+
 }

@@ -5,7 +5,7 @@ import { KnowledgeBasedUrlController } from '@controllers/backoffice/knowledgeBa
 
 const knowledgeBasedUrlRoute = async (app: FastifyInstance) => {
     app.get(
-        '/knowledge/based-url',
+        '/knowledge-based-url',
         {
             preHandler: [
                 CommonValidator.postValidator,
@@ -13,6 +13,36 @@ const knowledgeBasedUrlRoute = async (app: FastifyInstance) => {
             ],
         },
         KnowledgeBasedUrlController.getBasedUrl,
+    );
+    app.get(
+        '/knowledge-based-url/:id',
+        {
+            preHandler: [
+                CommonValidator.postValidator,
+                AuthUserHook.verifyAccessTokenExpired,
+            ],
+        },
+        KnowledgeBasedUrlController.getBasedUrlById,
+    );
+    app.put(
+        '/knowledge-based-url/:id',
+        {
+            preHandler: [
+                CommonValidator.postValidator,
+                AuthUserHook.verifyAccessTokenExpired,
+            ],
+        },
+        KnowledgeBasedUrlController.updateBasedUrl,
+    );
+    app.delete(
+        '/knowledge-based-url/:id',
+        {
+            preHandler: [
+                CommonValidator.postValidator,
+                AuthUserHook.verifyAccessTokenExpired,
+            ],
+        },
+        KnowledgeBasedUrlController.deleteBasedUrl,
     );
 };
 
