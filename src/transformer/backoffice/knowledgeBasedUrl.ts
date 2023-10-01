@@ -12,7 +12,7 @@ export namespace BackOfficeKnowledgeBasedUrlTransformer {
             }
         }>;
 
-        export type ResponseData = KnowledgeBasedUrl.backofficeViewT[];
+        export type ResponseData = KnowledgeBasedUrl.backofficeViewT;
     }
 
     export namespace getBasedUrl {

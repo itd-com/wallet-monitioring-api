@@ -8,6 +8,33 @@ import { BackOfficeKnowledgeBasedUrlTransformer } from '@transformer/backoffice/
 import { KnowledgeBasedUrlService } from '@domain/knowledge/services/knowledgeBasedUrl';
 
 export namespace KnowledgeBasedUrlController {
+    export const createBasedUrl = async (request: BackOfficeKnowledgeBasedUrlTransformer.createBasedUrl.Request, reply: FastifyReply) => {
+        const reqUser = AuthUserHook.getUserApi(request);
+        const {
+            url,
+            description,
+            note,
+        } = request.body;
+
+        const createResultId = await KnowledgeBasedUrlService.createOne({
+            url,
+            description: description ?? null,
+            note: note ?? null,
+        });
+
+        if (!createResultId) {
+            throw new CustomError({
+                statusCode: 500,
+                message: `Unable to create keynowledgeBaseUrls by ${JSON.stringify(request.body)}`,
+            });
+        }
+
+        const knowledgeBaseUrl = await KnowledgeBasedUrlService.getOneByCondition({ id: createResultId });
+        const response: BackOfficeKnowledgeBasedUrlTransformer.createBasedUrl.ResponseData = knowledgeBaseUrl!;
+        return reply.code(200).send(response);
+
+    };
+
     export const getBasedUrl = async (request: BackOfficeKnowledgeBasedUrlTransformer.getBasedUrl.Request, reply: FastifyReply) => {
         const reqUser = AuthUserHook.getUserApi(request);
 
@@ -68,7 +95,7 @@ export namespace KnowledgeBasedUrlController {
         const { id } = request.params;
 
         const deleteResult = await KnowledgeBasedUrlService.deleteOneById(id);
-        if (!!deleteResult) {
+        if (!deleteResult) {
             throw new CustomError({
                 statusCode: 500,
                 message: `Unable to delete keynowledgeBaseUrls by id=${id}`,

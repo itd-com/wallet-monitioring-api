@@ -44,6 +44,16 @@ const knowledgeBasedUrlRoute = async (app: FastifyInstance) => {
         },
         KnowledgeBasedUrlController.deleteBasedUrl,
     );
+    app.post(
+        '/knowledge-based-url',
+        {
+            preHandler: [
+                CommonValidator.postValidator,
+                AuthUserHook.verifyAccessTokenExpired,
+            ],
+        },
+        KnowledgeBasedUrlController.createBasedUrl,
+    );
 };
 
 export default knowledgeBasedUrlRoute;
